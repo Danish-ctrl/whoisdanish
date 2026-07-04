@@ -1,428 +1,1117 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio Website</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://fontawesome.com"></script>
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Danish Reza — Software Engineer | AI &amp; Test Automation</title>
+<meta name="description" content="Mohammed Danish Reza — Software Engineer focused on Generative AI, agentic systems and test automation. BMW battery testing at FEV eDLP." />
+
+<!-- Fonts: Space Grotesk (display) · IBM Plex Sans (body) · IBM Plex Mono (data) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0E16'/%3E%3Cpath d='M4 17 h5 l2 -7 3 13 3 -9 2 4 h6' fill='none' stroke='%2333E6D1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+
+<style>
+  :root{
+    --bg:#07101A;
+    --bg-2:#0A1622;
+    --panel:#0E1926;
+    --panel-2:#0A1420;
+    --line:#183247;
+    --line-2:#102132;
+    --text:#E9F2F9;
+    --muted:#7E96AF;
+    --muted-2:#556C86;
+    --accent:#33E6D1;
+    --accent-soft:rgba(51,230,209,.14);
+    --warm:#FF7A45;
+    --warm-soft:rgba(255,122,69,.12);
+    --good:#57D3A3;
+    --bad:#FF7676;
+    --radius:14px;
+    --radius-sm:10px;
+    --maxw:1120px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    font-weight:300;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--accent);color:#10131b}
+
+  /* ambient background graticule */
+  .grid-bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line-2) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line-2) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(120% 90% at 70% 0%,#000 30%,transparent 78%);
+            mask-image:radial-gradient(120% 90% at 70% 0%,#000 30%,transparent 78%);
+    opacity:.5;
+  }
+  .grid-bg::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(90% 60% at 80% -10%,var(--warm-soft),transparent 60%),
+               radial-gradient(70% 60% at 0% 10%,var(--accent-soft),transparent 55%);
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px;position:relative;z-index:1}
+
+  /* ---------- utility type ---------- */
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted-2);display:inline-flex;align-items:center;gap:9px;
+  }
+  .eyebrow::before{content:"//";color:var(--accent);font-weight:600}
+  h2.sec-title{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.02em;
+    font-size:clamp(1.7rem,3.4vw,2.35rem);margin:14px 0 6px;line-height:1.1;
+  }
+  .sec-sub{color:var(--muted);max-width:56ch;font-size:15.5px}
+
+  section{padding:92px 0;position:relative}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    transition:background .3s var(--ease),border-color .3s var(--ease),padding .3s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.nav.stuck{
+    background:rgba(10,14,22,.82);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line-2);
+  }
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:20px 26px;display:flex;align-items:center;justify-content:space-between;transition:padding .3s var(--ease)}
+  header.nav.stuck .nav-inner{padding:13px 26px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Space Grotesk';font-weight:600;font-size:18px;letter-spacing:-.01em}
+  .brand svg{width:26px;height:26px;flex:none}
+  .brand .dot{color:var(--accent)}
+  .menu{display:flex;align-items:center;gap:4px;list-style:none}
+  .menu a{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.02em;color:var(--muted);
+    padding:8px 13px;border-radius:8px;transition:color .2s,background .2s;position:relative;
+  }
+  .menu a:hover{color:var(--text)}
+  .menu a.active{color:var(--text)}
+  .menu a.active::after{content:"";position:absolute;left:13px;right:13px;bottom:3px;height:1.5px;background:var(--accent);border-radius:2px}
+  .nav-cta{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;padding:9px 16px;border:1px solid var(--line);
+    border-radius:9px;color:var(--text);transition:all .2s var(--ease);
+  }
+  .nav-cta:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+  .burger{display:none;background:none;border:1px solid var(--line);border-radius:9px;width:42px;height:40px;cursor:pointer;color:var(--text);align-items:center;justify-content:center}
+  .burger svg{width:20px;height:20px}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:100svh;display:flex;align-items:center;padding:120px 0 70px;position:relative;overflow:hidden}
+  #scope{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.9}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg,var(--bg) 8%,rgba(10,14,22,.55) 44%,transparent 72%),
+              linear-gradient(0deg,var(--bg),transparent 30%)}
+  .hero .wrap{z-index:2}
+  .hero-inner{max-width:660px}
+  .status-line{display:inline-flex;align-items:center;gap:9px;font-family:'IBM Plex Mono';font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:rgba(12,18,32,.6)}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 rgba(87,211,163,.6);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(87,211,163,.5)}70%{box-shadow:0 0 0 8px rgba(87,211,163,0)}100%{box-shadow:0 0 0 0 rgba(87,211,163,0)}}
+  .hero h1{font-family:'Space Grotesk';font-weight:700;letter-spacing:-.035em;line-height:1.02;font-size:clamp(2.7rem,7.4vw,5.1rem);margin:22px 0 4px}
+  .hero h1 .sur{color:var(--accent)}
+  .role-line{font-family:'Space Grotesk';font-weight:500;font-size:clamp(1.15rem,3vw,1.7rem);color:var(--text);min-height:1.5em;letter-spacing:-.01em}
+  .role-line .rot{color:var(--warm)}
+  .role-line .caret{color:var(--accent);font-weight:400;animation:blink 1.05s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero p.lede{color:var(--muted);font-size:16.5px;max-width:52ch;margin:20px 0 30px}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:13px;margin-bottom:34px}
+  .btn{font-family:'IBM Plex Mono';font-size:14px;padding:13px 22px;border-radius:11px;cursor:pointer;transition:all .22s var(--ease);display:inline-flex;align-items:center;gap:9px;border:1px solid transparent}
+  .btn svg{width:16px;height:16px}
+  .btn-primary{background:var(--accent);color:#14100a;font-weight:500}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px -10px rgba(51,230,209,.6)}
+  .btn-ghost{border-color:var(--line);color:var(--text);background:rgba(12,18,32,.4)}
+  .btn-ghost:hover{border-color:var(--warm);color:var(--warm);box-shadow:0 0 0 4px var(--warm-soft)}
+  .readouts{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:'IBM Plex Mono';font-size:12.5px}
+  .readouts .r{display:flex;flex-direction:column;gap:2px}
+  .readouts .r .k{color:var(--muted-2);letter-spacing:.08em;text-transform:uppercase;font-size:10.5px}
+  .readouts .r .v{color:var(--text)}
+  .readouts .r .v .accent{color:var(--accent)}
+
+  /* ---------- AI console ---------- */
+  .console-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:26px}
+  .terminal{
+    border:1px solid var(--line);border-radius:16px;overflow:hidden;background:
+      linear-gradient(180deg,var(--panel),var(--panel-2));
+    box-shadow:0 30px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.03);
+  }
+  .term-bar{display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line-2);background:rgba(255,255,255,.015)}
+  .term-bar .lamp{width:11px;height:11px;border-radius:50%}
+  .lamp.a{background:#ff5f57}.lamp.b{background:#febc2e}.lamp.c{background:#28c840}
+  .term-title{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--muted);margin-left:6px;letter-spacing:.03em}
+  .term-status{margin-left:auto;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted-2);display:flex;align-items:center;gap:7px}
+  .term-status .dt{width:7px;height:7px;border-radius:50%;background:var(--warm);box-shadow:0 0 8px var(--warm)}
+  .chat{padding:20px 18px 8px;height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+  .chat::-webkit-scrollbar{width:8px}
+  .chat::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+  .msg{display:flex;gap:12px;max-width:88%;animation:rise .35s var(--ease)}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .msg .av{width:30px;height:30px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono';font-size:12px;font-weight:600}
+  .msg.bot .av{background:var(--accent-soft);color:var(--accent);border:1px solid rgba(51,230,209,.25)}
+  .msg.me{align-self:flex-end;flex-direction:row-reverse}
+  .msg.me .av{background:var(--warm-soft);color:var(--warm);border:1px solid rgba(255,122,69,.25)}
+  .bubble{padding:11px 15px;border-radius:12px;font-size:14.5px;line-height:1.6}
+  .msg.bot .bubble{background:rgba(255,255,255,.03);border:1px solid var(--line-2);border-top-left-radius:3px}
+  .msg.me .bubble{background:var(--warm-soft);border:1px solid rgba(255,122,69,.2);border-top-right-radius:3px;color:#dff2ff}
+  .bubble a{color:var(--accent);border-bottom:1px solid rgba(51,230,209,.4)}
+  .bubble strong{font-weight:500;color:#fff}
+  .typing-dots{display:inline-flex;gap:4px;align-items:center;padding:3px 0}
+  .typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:td 1.2s infinite}
+  .typing-dots span:nth-child(2){animation-delay:.2s}.typing-dots span:nth-child(3){animation-delay:.4s}
+  @keyframes td{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  .suggest{display:flex;flex-wrap:wrap;gap:8px;padding:2px 18px 14px}
+  .chip{font-family:'IBM Plex Mono';font-size:12px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);cursor:pointer;background:none;transition:all .18s}
+  .chip:hover{border-color:var(--accent);color:var(--accent)}
+  .term-input{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line-2);background:rgba(255,255,255,.012)}
+  .term-input .prompt{font-family:'IBM Plex Mono';color:var(--accent);align-self:center}
+  .term-input input{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:'IBM Plex Mono';font-size:14.5px}
+  .term-input input::placeholder{color:var(--muted-2)}
+  .send-btn{background:var(--accent);border:none;color:#14100a;width:40px;height:40px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .18s,box-shadow .18s;flex:none}
+  .send-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px -8px rgba(51,230,209,.7)}
+  .send-btn svg{width:18px;height:18px}
+  .term-note{font-family:'IBM Plex Mono';font-size:11px;color:var(--muted-2);margin-top:12px;text-align:center;opacity:.85}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;margin-top:34px}
+  .about-copy p{color:var(--muted);margin-bottom:16px;font-size:16px}
+  .about-copy p b{color:var(--text);font-weight:500}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:14px;overflow:hidden}
+  .fact{background:var(--panel);padding:22px 20px}
+  .fact .n{font-family:'Space Grotesk';font-weight:600;font-size:26px;letter-spacing:-.02em}
+  .fact .n .u{color:var(--accent);font-size:18px}
+  .fact .l{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+  .portrait{display:flex;flex-direction:column;gap:12px}
+  .pf{position:relative;aspect-ratio:4/5;max-width:340px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--panel-2))}
+  .pf img{width:100%;height:100%;object-fit:cover;display:block}
+  .pf .mono-fallback{display:none;align-items:center;justify-content:center;position:absolute;inset:0;font-family:'Space Grotesk';font-weight:700;font-size:96px;letter-spacing:-.05em;color:var(--accent);background:radial-gradient(80% 60% at 50% 32%,rgba(51,230,209,.10),transparent 70%)}
+  .pf::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.14) 3px 4px);opacity:.22}
+  .pf .corner{position:absolute;width:14px;height:14px;border:2px solid var(--accent);opacity:.65}
+  .corner.tl{top:11px;left:11px;border-right:0;border-bottom:0}
+  .corner.tr{top:11px;right:11px;border-left:0;border-bottom:0}
+  .corner.bl{bottom:11px;left:11px;border-right:0;border-top:0}
+  .corner.br{bottom:11px;right:11px;border-left:0;border-top:0}
+  .pf-cap{display:flex;justify-content:space-between;max-width:340px;font-family:'IBM Plex Mono';font-size:11px;color:var(--muted-2);letter-spacing:.05em}
+  .pf-cap .ok{color:var(--good)}
+
+  /* ---------- experience timeline ---------- */
+  .timeline{margin-top:40px;position:relative;padding-left:26px}
+  .timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1.5px;background:linear-gradient(180deg,var(--accent),var(--warm) 60%,transparent)}
+  .tl-item{position:relative;padding:0 0 40px 30px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{content:"";position:absolute;left:-25.5px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+  .tl-item .when{font-family:'IBM Plex Mono';font-size:12px;color:var(--warm);letter-spacing:.03em}
+  .tl-item h3{font-family:'Space Grotesk';font-weight:600;font-size:19px;margin:5px 0 1px;letter-spacing:-.01em}
+  .tl-item .org{font-size:14px;color:var(--muted);font-family:'IBM Plex Mono'}
+  .tl-item ul{list-style:none;margin-top:11px;display:flex;flex-direction:column;gap:7px}
+  .tl-item li{color:var(--muted);font-size:14.5px;padding-left:18px;position:relative}
+  .tl-item li::before{content:"›";position:absolute;left:0;color:var(--accent);font-weight:600}
+
+  /* ---------- projects ---------- */
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:40px}
+  .card{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line-2);
+    border-radius:15px;padding:24px;transition:transform .28s var(--ease),border-color .28s,box-shadow .28s;position:relative;overflow:hidden;
+  }
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);opacity:0}
+  .card:hover{transform:translateY(-4px);border-color:var(--line);box-shadow:0 24px 60px -34px rgba(0,0,0,.85)}
+  .card.feat{grid-column:span 2;background:
+     radial-gradient(120% 140% at 100% 0%,rgba(51,230,209,.07),transparent 55%),
+     linear-gradient(180deg,var(--panel),var(--panel-2));border-color:rgba(51,230,209,.22)}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}
+  .card-ico{width:44px;height:44px;border-radius:11px;background:var(--accent-soft);border:1px solid rgba(51,230,209,.22);display:flex;align-items:center;justify-content:center;color:var(--accent);flex:none}
+  .card-ico svg{width:22px;height:22px}
+  .card .tag{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted-2);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line-2);border-radius:6px;padding:4px 8px;white-space:nowrap}
+  .card h3{font-family:'Space Grotesk';font-weight:600;font-size:19px;letter-spacing:-.01em;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:14.5px;margin-bottom:16px}
+  .stack-tags{display:flex;flex-wrap:wrap;gap:7px}
+  .stack-tags span{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--text);background:rgba(255,122,69,.07);border:1px solid rgba(255,122,69,.16);border-radius:7px;padding:4px 9px}
+
+  /* more projects */
+  .subhead{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:15px;color:var(--muted);letter-spacing:.01em;margin:46px 0 18px;display:flex;align-items:center;gap:12px}
+  .subhead::before{content:"";width:20px;height:1.5px;background:var(--warm);flex:none}
+  .proj-grid.more{grid-template-columns:repeat(3,1fr);gap:14px;margin-top:0}
+  .card.sm{padding:18px}
+  .card.sm .card-ico{width:38px;height:38px;border-radius:9px}
+  .card.sm .card-ico svg{width:19px;height:19px}
+  .card.sm h3{font-size:16px;margin-bottom:6px}
+  .card.sm p{font-size:13.5px;margin-bottom:12px}
+  .plink{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--accent);margin-top:15px;border-bottom:1px solid transparent;transition:border-color .2s;width:fit-content}
+  .plink:hover{border-color:var(--accent)}
+  .plink svg{width:14px;height:14px}
+
+  /* ---------- stack ---------- */
+  .stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:40px}
+  .stack-col{background:var(--panel);border:1px solid var(--line-2);border-radius:15px;padding:24px}
+  .stack-col .head{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+  .stack-col .head .ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(51,230,209,.2)}
+  .stack-col .head .ic svg{width:18px;height:18px}
+  .stack-col .head h3{font-family:'Space Grotesk';font-weight:600;font-size:16px}
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pills span{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 11px;transition:all .18s}
+  .pills span:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* ---------- certs / education ---------- */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:40px}
+  .block-label{font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+  .edu-item{border-left:1.5px solid var(--line);padding:0 0 22px 20px;position:relative}
+  .edu-item:last-child{padding-bottom:0}
+  .edu-item::before{content:"";position:absolute;left:-5px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--warm)}
+  .edu-item .yr{font-family:'IBM Plex Mono';font-size:12px;color:var(--muted-2)}
+  .edu-item h4{font-family:'Space Grotesk';font-weight:500;font-size:16px;margin:3px 0 2px}
+  .edu-item .sub{color:var(--muted);font-size:14px}
+  .cert-list{display:flex;flex-direction:column;gap:12px}
+  .cert{display:flex;gap:13px;align-items:flex-start;padding:14px 16px;background:var(--panel);border:1px solid var(--line-2);border-radius:12px;transition:border-color .2s}
+  .cert:hover{border-color:var(--line)}
+  .cert .ck{color:var(--accent);flex:none;margin-top:2px}
+  .cert .ck svg{width:17px;height:17px}
+  .cert .ct{font-size:14.5px}
+  .cert .cy{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted-2);margin-top:2px}
+  .lang-row{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
+  .lang{flex:1;min-width:150px;background:var(--panel);border:1px solid var(--line-2);border-radius:12px;padding:16px 18px}
+  .lang .lg{font-family:'Space Grotesk';font-weight:500;font-size:15px}
+  .lang .lv{font-family:'IBM Plex Mono';font-size:12px;color:var(--warm);margin-top:3px}
+  .lang .meter{height:4px;background:var(--line-2);border-radius:4px;margin-top:10px;overflow:hidden}
+  .lang .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--warm));border-radius:4px}
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:38px}
+  .contact-copy p{color:var(--muted);font-size:16px;margin-bottom:22px;max-width:42ch}
+  .cx{display:flex;gap:13px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line-2)}
+  .cx:last-child{border-bottom:none}
+  .cx .ci{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);border:1px solid rgba(51,230,209,.2);display:flex;align-items:center;justify-content:center;color:var(--accent);flex:none}
+  .cx .ci svg{width:18px;height:18px}
+  .cx .k{font-family:'IBM Plex Mono';font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.06em}
+  .cx .v{font-size:15px}
+  .cx .v:hover{color:var(--accent)}
+  form .frow{display:flex;gap:14px}
+  form .field{margin-bottom:14px;flex:1}
+  form label{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:7px}
+  form input,form textarea{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--text);font-family:'IBM Plex Sans';font-size:15px;outline:none;transition:border-color .2s,box-shadow .2s}
+  form input:focus,form textarea:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+  form textarea{resize:vertical;min-height:120px}
+  .form-msg{font-family:'IBM Plex Mono';font-size:13px;margin-top:6px;min-height:1.2em}
+  .form-msg.ok{color:var(--good)}.form-msg.err{color:var(--bad)}
+
+  /* ---------- footer ---------- */
+  footer.foot{border-top:1px solid var(--line-2);padding:34px 0;position:relative;z-index:1}
+  .foot-inner{max-width:var(--maxw);margin:0 auto;padding:0 26px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+  .foot-inner .cp{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--muted-2)}
+  .socials{display:flex;gap:10px}
+  .socials a{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s var(--ease)}
+  .socials a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+  .socials svg{width:18px;height:18px}
+
+  /* to-top */
+  .totop{position:fixed;right:22px;bottom:22px;z-index:90;width:46px;height:46px;border-radius:12px;background:var(--accent);color:#14100a;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(14px);pointer-events:none;transition:all .3s var(--ease);box-shadow:0 10px 30px -12px rgba(51,230,209,.7)}
+  .totop.show{opacity:1;transform:none;pointer-events:auto}
+  .totop svg{width:20px;height:20px}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:860px){
+    .menu,.nav-cta{display:none}
+    .burger{display:flex}
+    header.nav.open .menu{
+      display:flex;flex-direction:column;position:fixed;top:0;right:0;height:100svh;width:min(78vw,320px);
+      background:var(--bg-2);border-left:1px solid var(--line);padding:90px 24px 24px;gap:6px;align-items:stretch;z-index:99;
+    }
+    header.nav.open .menu a{padding:14px;font-size:15px;border-bottom:1px solid var(--line-2)}
+    .about-grid,.two-col,.contact-grid{grid-template-columns:1fr;gap:34px}
+    .proj-grid,.stack-grid{grid-template-columns:1fr}
+    .proj-grid.more{grid-template-columns:repeat(2,1fr)}
+    .card.feat{grid-column:span 1}
+    .facts{grid-template-columns:1fr 1fr}
+    section{padding:74px 0}
+    .hero::after{background:linear-gradient(0deg,var(--bg) 6%,rgba(10,14,22,.4) 46%,transparent 80%)}
+    #scope{opacity:.6}
+  }
+  @media(max-width:520px){
+    .wrap{padding:0 18px}
+    form .frow{flex-direction:column;gap:0}
+    .hero-ctas{flex-direction:column;align-items:stretch}
+    .btn{justify-content:center}
+    .chat{height:320px}
+    .proj-grid.more{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
 </head>
-
 <body>
-    <div class="scroll-up-btn">
-        <i class="fas fa-angle-up"></i>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#home" class="brand" aria-label="Danish Reza home">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0F1626"/><path d="M4 17h5l2-7 3 13 3-9 2 4h6" stroke="#33E6D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Danish<span class="dot">.</span>
+    </a>
+    <ul class="menu" id="menu">
+      <li><a href="#console" data-nav>console</a></li>
+      <li><a href="#about" data-nav>profile</a></li>
+      <li><a href="#experience" data-nav>experience</a></li>
+      <li><a href="#projects" data-nav>projects</a></li>
+      <li><a href="#stack" data-nav>stack</a></li>
+      <li><a href="#certs" data-nav>certs</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">get in touch →</a>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <canvas id="scope" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-inner">
+      <span class="status-line"><span class="pulse"></span>Open to AI &amp; software engineering roles</span>
+      <h1>Mohammed<br>Danish <span class="sur">Reza</span></h1>
+      <div class="role-line">Building <span class="rot" id="rot">AI &amp; agentic systems</span><span class="caret">▍</span></div>
+      <p class="lede">Software engineer at FEV eDLP working on BMW battery-testing and validation — with a growing focus on Generative AI, LLMs and agentic tooling that I design and ship end to end.</p>
+      <div class="hero-ctas">
+        <a href="#console" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9h8M8 13h5"/><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg>
+          Ask my AI
+        </a>
+        <a href="#projects" class="btn btn-ghost">View work</a>
+        <a href="assets/Danish_Reza_CV.pdf" class="btn btn-ghost" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
+        </a>
+      </div>
+      <div class="readouts">
+        <div class="r"><span class="k">Role</span><span class="v">SW &amp; Test Automation Engineer</span></div>
+        <div class="r"><span class="k">Location</span><span class="v">Wolfen, <span class="accent">DE</span></span></div>
+        <div class="r"><span class="k">Focus</span><span class="v">GenAI · Agentic Systems</span></div>
+        <div class="r"><span class="k">Experience</span><span class="v"><span class="accent">2+</span> yrs</span></div>
+      </div>
     </div>
-    <nav class="navbar">
-        <div class="max-width">
-            <div class="logo"><a href="#">Portfo<span>lio.</span></a></div>
-            <ul class="menu">
-                <li><a href="#home" class="menu-btn">Home</a></li>
-                <li><a href="#about" class="menu-btn">About Me</a></li>
-                <li><a href="#services" class="menu-btn">Projects</a></li>
-                <li><a href="#skills" class="menu-btn">Skills</a></li>
-                <li><a href="#teams" class="menu-btn">Certifications</a></li>
-                <li><a href="#contact" class="menu-btn">Contact</a></li>
-            </ul>
-            <div class="menu-btn">
-                <i class="fas fa-bars"></i>
-            </div>
+  </div>
+</section>
+
+<!-- ============ AI CONSOLE ============ -->
+<section id="console">
+  <div class="wrap">
+    <div class="console-head reveal">
+      <div>
+        <span class="eyebrow">NeEvo · web edition</span>
+        <h2 class="sec-title">Meet NeEvo — ask anything</h2>
+        <p class="sec-sub">NeEvo is my AI assistant. This is its web face — ask about my projects, stack, experience, or whether I'm a fit for a role. The full desktop app does more; <a href="#projects" style="color:var(--accent);border-bottom:1px solid var(--accent)">see the project below</a>.</p>
+      </div>
+    </div>
+
+    <div class="terminal reveal">
+      <div class="term-bar">
+        <span class="lamp a"></span><span class="lamp b"></span><span class="lamp c"></span>
+        <span class="term-title">danish@portfolio ~ neevo</span>
+        <span class="term-status"><span class="dt"></span><span id="modeText">ready</span></span>
+      </div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="suggest" id="suggest">
+        <button class="chip">What does Danish do at FEV?</button>
+        <button class="chip">Tell me about NeEvo</button>
+        <button class="chip">What's his AI stack?</button>
+        <button class="chip">Why hire him?</button>
+      </div>
+      <div class="term-input">
+        <span class="prompt">›</span>
+        <input id="chatInput" type="text" placeholder="Type a question and hit enter…" autocomplete="off" aria-label="Ask the assistant" />
+        <button class="send-btn" id="sendBtn" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+    <p class="term-note">NeEvo, web edition — chat &amp; Q&amp;A. The desktop app also runs agent actions like email, reminders and web search. Answers via a live model when connected, otherwise from Danish's profile. Nothing leaves your browser.</p>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="reveal"><span class="eyebrow">Profile</span><h2 class="sec-title">Software engineer, moving into AI</h2></div>
+    <div class="about-grid">
+      <div class="portrait reveal">
+        <div class="pf">
+          <img src="images/Danish.jpeg" alt="Danish Reza" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="mono-fallback">DR</div>
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
         </div>
-    </nav>
+        <div class="pf-cap"><span>SUBJECT · DANISH REZA</span><span class="ok">● ACTIVE</span></div>
+      </div>
+      <div class="about-copy reveal">
+        <p>I'm a software engineer with a strong <b>Python</b> foundation and a growing focus on <b>Generative AI</b> and agentic systems. Day to day I work at <b>FEV eDLP</b> on BMW battery testing — writing test-automation tooling, running CAN network analysis, and turning messy test data into structured, useful reports.</p>
+        <p>Alongside that, I independently design and ship <b>AI-powered applications</b> using LLMs like the OpenAI API and Llama-3, and my M.Sc. thesis applied TensorFlow and Scikit-learn to AI-driven vehicle test evaluation. I'm now steering toward <b>AI engineering full-time</b>.</p>
+        <p>Originally from India, based in Germany. Always learning — currently deep in LangChain, RAG and multi-agent systems.</p>
+      </div>
+    </div>
+    <div class="facts reveal" style="margin-top:30px">
+      <div class="fact"><div class="n">2+<span class="u"> yrs</span></div><div class="l">Professional experience</div></div>
+      <div class="fact"><div class="n">M.Sc.</div><div class="l">Automotive SW Eng · TU Chemnitz</div></div>
+      <div class="fact"><div class="n">BMW</div><div class="l">Battery testing @ FEV eDLP</div></div>
+      <div class="fact"><div class="n">4+</div><div class="l">Shipped AI / ML projects</div></div>
+    </div>
+  </div>
+</section>
 
-    <!-- home section start -->
-    <section class="home" id="home">
-        <div class="max-width">
-            <div class="home-content">
-                <div class="text-1">Hello, my name is</div>
-                <div class="text-2">Mohammed Danish Reza</div>
-                <div class="text-3">And I'm a <span class="typing"></span></div>
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="reveal"><span class="eyebrow">Experience</span><h2 class="sec-title">Where I've built things</h2></div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="when">Nov 2023 — Present</div>
+        <h3>Software Application Engineer</h3>
+        <div class="org">FEV eDLP · Sandersdorf, DE</div>
+        <ul>
+          <li>Develop and run test automation with Python and Morphee for BMW battery-testing projects.</li>
+          <li>Built Python tooling — a CSV-to-MTable converter and a custom inter-tool communication interface — cutting manual data prep from hours to minutes.</li>
+          <li>Perform CAN network analysis with CANalyzer and produce structured, data-driven reports.</li>
+          <li>Troubleshoot and run root-cause analysis at component and system level.</li>
+        </ul>
+      </div>
+      <div class="tl-item reveal">
+        <div class="when">Oct 2022 — Apr 2023</div>
+        <h3>Master Thesis · AI / ML</h3>
+        <div class="org">FDTech · Chemnitz, DE</div>
+        <ul>
+          <li>Developed and validated AI/ML models (TensorFlow, Scikit-learn) for automated vehicle test evaluation.</li>
+          <li>Benchmarked AI-based evaluation against traditional automation on accuracy and other metrics.</li>
+          <li>Designed ISO 15622-compliant scenarios and evaluated vehicle behaviour in CarMaker.</li>
+        </ul>
+      </div>
+      <div class="tl-item reveal">
+        <div class="when">Sep 2021 — Sep 2022</div>
+        <h3>Working Student · Python Development</h3>
+        <div class="org">FDTech · Chemnitz, DE</div>
+        <ul>
+          <li>Built a Python REST API library connecting the Test-Guide reporting tool with the Visure requirements platform.</li>
+          <li>Automated report-template generation using BIRT integrated with Test-Guide.</li>
+        </ul>
+      </div>
+      <div class="tl-item reveal">
+        <div class="when">Nov 2020 — May 2021</div>
+        <h3>Software Internship</h3>
+        <div class="org">ROKIN GmbH · Munich, DE</div>
+        <ul>
+          <li>Built frontend interfaces (HTML, CSS, JS) and full-text search with Elasticsearch/Kibana on Docker.</li>
+          <li>Deployed applications on Google Cloud Platform.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-            </div>
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="reveal"><span class="eyebrow">Projects</span><h2 class="sec-title">Things I've designed &amp; shipped</h2></div>
+    <div class="proj-grid">
+
+      <div class="card feat reveal">
+        <div class="card-top">
+          <div class="card-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 12h.01M15 12h.01M9 15h6"/></svg>
+          </div>
+          <span class="tag">Agentic · May 2026</span>
         </div>
-    </section>
+        <h3>NeEvo — AI Automation Assistant</h3>
+        <p>My agentic desktop assistant, powered by Llama-3. It runs a <strong>chat mode</strong> for conversation, an <strong>agent mode</strong> that takes real actions — automated email, reminders and web search — and <strong>PDF Q&amp;A</strong> for asking questions over documents. A persistent background thread keeps it responsive, and the CustomTkinter UI stays extensible for multi-step automations. The assistant in the console above is its web face.</p>
+        <div class="stack-tags"><span>Python</span><span>Llama-3</span><span>Agentic AI</span><span>Chat + Agent modes</span><span>PDF Q&amp;A</span><span>CustomTkinter</span></div>
+        <a class="plink" href="https://github.com/Danish-ctrl/neevo_ai_assistant" target="_blank" rel="noopener">View on GitHub<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </div>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="max-width">
-            <h2 class="title">About me</h2>
-            <div class="about-content">
-                <div class="column left">
-                    <img src="images/profile-1.png" alt="">
-                </div>
-                <div class="column right">
-                    <div class="text">Hello, this is Danish and I'm a <span class="typing-2"></span></div>
-                    <p>I am pursuing Master's in Automotive Software Engineering from Chemnitz University of Technology, Germany.I have done my Bachelor's in Information Technology from J.N.T.U, Hyderabad, India.Currently, I am doing projects on Self-Driving
-                        Technologies with the help of Machine Learning, Deep Learning and Computer Vision technologies.I am a passionate guy with lots of motivations. Always eager to learn new technologies.
-                    </p>
-                    <a href="https://bit.ly/35ED055" target="_blank">See my CV</a>
-                </div>
-            </div>
+      <div class="card reveal">
+        <div class="card-top">
+          <div class="card-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <span class="tag">GenAI · Nov 2025</span>
         </div>
-    </section>
+        <h3>AI Code Safety Reviewer</h3>
+        <p>A static code-analysis tool using the OpenAI API to flag security vulnerabilities and code-quality issues, with a CustomTkinter GUI for interactive review.</p>
+        <div class="stack-tags"><span>Python</span><span>OpenAI API</span><span>Static analysis</span></div>
+        <a class="plink" href="https://github.com/Danish-ctrl/AI_Code_Safety_Reviewer" target="_blank" rel="noopener">View on GitHub<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
 
-    <!-- Projects Section start -->
-    <section class="services" id="services">
-        <div class="max-width">
-            <h2 class="title">Projects</h2>
-            <div class="serv-content">
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-                        <div class="text">Monitoring and Control of Vehicle Systems using CAN–Bus</div>
-                        <p>Implemented CAN network consisting of 5 ECU’s to control a virtual instrument cluster and exchange information over CAN bus. ECU’s functionality involves Monitoring, Engine Control, Door Lock Control .</p>
-                    </div>
-                </div>
+      </div>
 
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-heartbeat"></i>
-                        <div class="text">Heart Disease Predictions using Machine Learning Algorithm</div>
-                        <p>With the help of Supervised Learning Algorithm(Random Forest),a model is proposed which is going to predict whether a patient is suffering from heart disease or not</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-road"></i>
-                        <div class="text">Classify Traffic Signs Using Deep Learning for Self-Driving Cars</div>
-                        <p>Trained deep learning model known as Convolutional Neural Networks (CNN) to classify 43 different traffic sign images.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-car"></i>
-                        <div class="text">Real-Time Object Detection with YOLOv3</div>
-                        <p>Used pre-trained models to perform real-time and passive inference with a GPU and used OpenCV library to manipulate video data and develop a command line application with Python for inference.</p>
-                    </div>
-                </div>
-
-
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-clock-o"></i>
-                        <div class="text">Clock Application</div>
-                        <p>Used Html,CSS and JS.The front end looks like a simple clock.It tells the current time</p>
-                    </div>
-                </div>
-
-
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-stethoscope"></i>
-                        <div class="text">Detecting COVID-19 with Chest X-Ray using PyTorch</div>
-                        <p>Used Deep learning library PyTorch to create and train a ResNet-18 model and apply it to a set of chest X-ray data.The aim of this project is to create an image classification model that can predict Chest X-Ray scans that belong to one of the three classes with a reasonably high accuracy.</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-
-                        <i class='fa fa-comments' style='font-size:46px'></i>
-                        <div class="text">Virtual Desktop Assistant</div>
-                        <p>Used python and its various libraries, a virtual desktop assistant was created which takes input as voice command and generates voice output.</p>
-                    </div>
-                </div>
-
-            </div>
+      <div class="card reveal">
+        <div class="card-top">
+          <div class="card-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 4-6"/></svg>
+          </div>
+          <span class="tag">Work · FEV</span>
         </div>
+        <h3>Battery Test Tooling</h3>
+        <p>A CSV-to-MTable converter and a custom inter-tool communication interface for BMW battery-test workflows — reducing manual data preparation from hours to minutes.</p>
+        <div class="stack-tags"><span>Python</span><span>Pandas</span><span>Morphee</span><span>Automation</span></div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-top">
+          <div class="card-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17V9a6 6 0 0 1 12 0v8M12 3v2"/><circle cx="12" cy="10" r="1"/></svg>
+          </div>
+          <span class="tag">Thesis · AI/ML</span>
         </div>
-    </section>
+        <h3>AI-Driven Vehicle Test Evaluation</h3>
+        <p>M.Sc. thesis building TensorFlow &amp; Scikit-learn models to automatically evaluate vehicle tests, benchmarked against traditional automation across ISO 15622 scenarios in CarMaker.</p>
+        <div class="stack-tags"><span>TensorFlow</span><span>Scikit-learn</span><span>CarMaker</span><span>ISO 15622</span></div>
+      </div>
 
-    <!-- Skills section start -->
-    <section class="skills" id="skills">
-        <div class="max-width">
-            <h2 class="title">Skills</h2>
-            <div class="skills-content">
-                <div class="column left">
-                    <div class="text">My skills & experiences.</div>
-                    <p>I have worked on various projects related to Machine Learning, Deep Learning and Computer Vision technologies. I have adequate knowledge of languages like Python, C and MATLAB with its few frameworks like TensorFlow , Keras, Tkinter
-                        and Django. Apart from programming languages I know web technologies like HTML,CSS, JavaScript and Database technology as SQL and MongoDB. I have worked on Android application development as a part of my training.</p>
-                    <a href="https://rb.gy/yma35g" target="_blank">Know more</a>
-                </div>
-                <div class="column right">
-                    <div class="bars">
-                        <div class="info">
-                            <span>Python</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="line python"></div>
-                    </div>
+    </div>
 
-                    <div class="bars">
-                        <div class="info">
-                            <span>Docker</span>
-                            <span>75%</span>
-                        </div>
-                        <div class="line c"></div>
-                    </div>
+    <div class="subhead reveal">More projects — earlier &amp; academic work</div>
+    <div class="proj-grid more">
 
-                    <div class="bars">
-                        <div class="info">
-                            <span>Postman</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="line c"></div>
-                    </div>
-
-                    <div class="bars">
-                        <div class="info">
-                            <span>MATLAB</span>
-                            <span>75%</span>
-                        </div>
-                        <div class="line matlab"></div>
-                    </div>
-
-                    <div class="bars">
-                        <div class="info">
-                            <span>Google Cloud Platform</span>
-                            <span>75%</span>
-                        </div>
-                        <div class="line html"></div>
-                    </div>
-
-                    <div class="bars">
-                        <div class="info">
-                            <span>MySQL</span>
-                            <span>70%</span>
-                        </div>
-                        <div class="line mysql"></div>
-                    </div>
-
-                    <div class="bars">
-                        <div class="info">
-                            <span>Github</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="line css"></div>
-                    </div>
-
-                    <div class="bars">
-                        <div class="info">
-                            <span>MongoDB</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="line js"></div>
-                    </div>
-
-                    <div class="bars">
-                        <div class="info">
-                            <span>PyCharm & Visual Studio</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="line js"></div>
-                    </div>
-
-                    <div class="bars">
-                        <div class="info">
-                            <span>JavaScript</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="line js"></div>
-                    </div>
-
-
-
-                </div>
-            </div>
+      <div class="card sm reveal">
+        <div class="card-top">
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M8 6h8M7.4 7.6 11 16.2M16.6 7.6 13 16.2"/></svg></div>
+          <span class="tag">Automotive</span>
         </div>
-    </section>
+        <h3>CAN-Bus Vehicle Systems</h3>
+        <p>A 5-ECU CAN network driving a virtual instrument cluster — monitoring, engine-control and door-lock ECUs exchanging data over the bus.</p>
+        <div class="stack-tags"><span>CAN Bus</span><span>ECU</span><span>Embedded C</span></div>
+      </div>
 
-    <!-- Certifications section start -->
-    <section class="teams" id="teams">
-        <div class="max-width">
-            <h2 class="title">Certifications</h2>
-            <div class="carousel owl-carousel">
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">The Complete Self-Driving Car Course-Applied Deep Learning</p>
-                        <a href="https://bit.ly/3GuAD1K" target="_blank"><b>Check it</b></a>
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Advanced Driver Assistance Systems(ADAS)</p>
-                        <a href="https://bit.ly/3AUah7R" target="_blank"><b>Check it</b></a>
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Autonomous Cars:How Do They Work and Impact Us</p>
-                        <a href="https://bit.ly/3ukiwsC" target="_blank"><b>Check it</b></a>
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Google Cloud Essentials</p>
-                        <a href="https://www.qwiklabs.com/public_profiles/06eb6617-81f1-4148-a1b5-3098b24d6f94" target="_blank"><b>Check it</b></a>
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Google Analytics</p>
-                        <a href="https://bit.ly/3L4Ck9k" target="_blank"><b>Check it</b></a>
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">JavaScript:Understanding the weird parts</p>
-                        <a href="https://bit.ly/3unq9ig" target="_blank"><b>Check it</b></a>
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Machine Learning</p>
-                        <a href="https://rb.gy/gjgjiv" target="_blank"><b>Check it</b></a>
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Deep Learning</p>
-                        <a href="https://rb.gy/wznzj2" target="_blank"><b>Check it</b></a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">MATLAB</p>
-                        <a href="https://rb.gy/zaazis" target="_blank"><b>Check it</b></a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Covid-19 Detection using PyTorch</p>
-                        <a href="https://rb.gy/dxcsai" target="_blank"><b>Check it</b></a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Object Detection with YOLOv3</p>
-                        <a href="https://rb.gy/rjkfqp" target="_blank"><b>Check it</b></a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="box">
-                        <p style="color:red" style="font-size:30px">Classification of Traffic Signs using CNN</p>
-                        <a href="https://rb.gy/isesga" target="_blank"><b>Check it</b></a>
-                    </div>
-                </div>
-
-
-            </div>
+      <div class="card sm reveal">
+        <div class="card-top">
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"/><path d="M12 9v5M12 17h.01"/></svg></div>
+          <span class="tag">Deep Learning</span>
         </div>
-    </section>
+        <h3>Traffic Sign Classification</h3>
+        <p>A convolutional neural network trained to recognise 43 traffic-sign classes for self-driving perception.</p>
+        <div class="stack-tags"><span>CNN</span><span>TensorFlow</span><span>Computer Vision</span></div>
+      </div>
 
-    <!-- Contact section start -->
-    <section class="contact" id="contact">
-        <div class="max-width">
-            <h2 class="title">Contact me</h2>
-            <div class="contact-content">
-                <div class="column left">
-                    <div class="text">Let's Connect</div>
-                    <p>Any query?I am always here to listen you.Please contact me anytime using the form given.<br>
-                        <Strong>Thank You</Strong>
-                    </p>
-                    <div class="icons">
-                        <div class="row">
-                            <i class="fa fa-user"></i>
-                            <div class="info">
-                                <div class="head">Name</div>
-                                <div class="sub-title">Mohammed Danish Reza</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fa fa-address-card"></i>
-                            <div class="info">
-                                <div class="head">Address</div>
-                                <div class="sub-title">Chemnitz, Saxony, Germany</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fa fa-envelope"></i>
-                            <div class="info">
-                                <div class="head">Email</div>
-                                <div class="sub-title">danish.reza1@gmail.com</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column right">
-                    <div class="text">Message me</div>
-                    <form method="POST" action='https://formspree.io/f/mjvpdgey'>
-                        <div class="fields">
-                            <div class="field name">
-                                <label>Name</label>
-                                <input type="text" name="name" required>
-                            </div>
-
-                            <div class="field email">
-                                <label>Email</label>
-                                <input type="email" name="email" required>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="field">
-                            <label>Subject</label>
-                            <input type="text" name="subject" required>
-                        </div>
-                        <br>
-                        <div class="field textarea">
-                            <label>Message</label>
-                            <textarea cols="30" rows="10" name="message" required></textarea>
-                        </div>
-                        <br>
-                        <div class="button">
-                            <button type="submit">Send message</button></a>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
+      <div class="card sm reveal">
+        <div class="card-top">
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="9" width="8" height="6" rx="1"/></svg></div>
+          <span class="tag">Computer Vision</span>
         </div>
-    </section>
+        <h3>Real-Time Object Detection</h3>
+        <p>Real-time inference with a pretrained YOLOv3 model and OpenCV, wrapped in a Python command-line app.</p>
+        <div class="stack-tags"><span>YOLOv3</span><span>OpenCV</span><span>Python</span></div>
+      </div>
 
-    <!-- footer section start -->
-    <footer>
-        <span>Created By <a href="https://rb.gy/yma35g"><b>Mohammed Danish Reza</b></a> | <span class="far fa-copyright" aria-hidden="true"></span> 2020 All rights reserved.</span>
-        <div class="social-menu" style="text-align: center">
-            <a href="https://www.facebook.com/danish.reza.3154/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true" style="font-size: 20px" (space)></i></a>
-            <a href="https://www.instagram.com/i_m_a_danisch/" target="_blank"><i class="fa fa-instagram" aria-hidden="true" style="font-size:20px" (space) ></i></a>
-            <a href="https://rb.gy/yma35g" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true" style="font-size:20px" (space)></i></a>
-            <a href="https://github.com/Danish-ctrl" target="_blank"><i class="fa fa-github-square" aria-hidden="true" style="font-size:20px" (space)></i></a>
-
+      <div class="card sm reveal">
+        <div class="card-top">
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <span class="tag">Medical AI</span>
         </div>
-    </footer>
+        <h3>COVID-19 Chest X-Ray</h3>
+        <p>A ResNet-18 image classifier (PyTorch) sorting chest X-rays across three diagnostic classes.</p>
+        <div class="stack-tags"><span>PyTorch</span><span>ResNet-18</span><span>Imaging</span></div>
+      </div>
 
-    <script src="script.js"></script>
+      <div class="card sm reveal">
+        <div class="card-top">
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
+          <span class="tag">Machine Learning</span>
+        </div>
+        <h3>Heart Disease Prediction</h3>
+        <p>A Random Forest model predicting heart-disease risk from patient features, with data prep and evaluation.</p>
+        <div class="stack-tags"><span>Scikit-learn</span><span>Random Forest</span></div>
+      </div>
+
+      <div class="card sm reveal">
+        <div class="card-top">
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+          <span class="tag">Python</span>
+        </div>
+        <h3>Virtual Desktop Assistant</h3>
+        <p>A voice-in / voice-out desktop assistant built in Python with speech-recognition and text-to-speech libraries.</p>
+        <div class="stack-tags"><span>Python</span><span>Speech</span></div>
+      </div>
+
+      <div class="card sm reveal">
+        <div class="card-top">
+          <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <span class="tag">Web</span>
+        </div>
+        <h3>Clock App</h3>
+        <p>A small live clock built with vanilla HTML, CSS and JavaScript — an early front-end exercise.</p>
+        <div class="stack-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ STACK ============ -->
+<section id="stack">
+  <div class="wrap">
+    <div class="reveal"><span class="eyebrow">Stack</span><h2 class="sec-title">Tools I reach for</h2></div>
+    <div class="stack-grid">
+      <div class="stack-col reveal">
+        <div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v2a4 4 0 0 0 8 0M12 22a4 4 0 0 0 4-4v-2a4 4 0 0 0-8 0"/><circle cx="12" cy="12" r="2"/></svg></span><h3>AI &amp; ML</h3></div>
+        <div class="pills"><span>Generative AI</span><span>LLMs</span><span>OpenAI API</span><span>Llama-3</span><span>Agentic AI</span><span>Multi-Agent Systems</span><span>TensorFlow</span><span>Scikit-learn</span><span>OpenCV</span></div>
+      </div>
+      <div class="stack-col reveal">
+        <div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/></svg></span><h3>Languages &amp; Data</h3></div>
+        <div class="pills"><span>Python</span><span>C</span><span>JavaScript</span><span>MySQL</span><span>MongoDB</span><span>HTML</span><span>CSS</span></div>
+      </div>
+      <div class="stack-col reveal">
+        <div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7l-5 5 5 5M4 4v16"/><circle cx="18" cy="12" r="2"/></svg></span><h3>Software &amp; Tooling</h3></div>
+        <div class="pills"><span>Git</span><span>Jira</span><span>Confluence</span><span>Sphinx</span><span>Docker</span><span>GCP</span><span>Postman</span><span>Morphee</span><span>CANalyzer</span><span>CAPL</span><span>HIL Simulation</span></div>
+      </div>
+      <div class="stack-col reveal">
+        <div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><h3>Frameworks &amp; Libraries</h3></div>
+        <div class="pills"><span>Django</span><span>Tkinter</span><span>CustomTkinter</span><span>Pandas</span><span>NumPy</span><span>Matplotlib</span><span>Elasticsearch</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ============ CERTS / EDUCATION ============ -->
+<section id="certs">
+  <div class="wrap">
+    <div class="reveal"><span class="eyebrow">Credentials</span><h2 class="sec-title">Education &amp; certifications</h2></div>
+    <div class="two-col">
+      <div class="reveal">
+        <div class="block-label">Education</div>
+        <div class="edu-item">
+          <div class="yr">Apr 2019 — Mar 2023</div>
+          <h4>M.Sc. Automotive Software Engineering</h4>
+          <div class="sub">Chemnitz University of Technology (TU Chemnitz)</div>
+        </div>
+        <div class="edu-item">
+          <div class="yr">Sep 2014 — Aug 2018</div>
+          <h4>B.Sc. Information Technology</h4>
+          <div class="sub">J.B. Institute of Engineering and Technology</div>
+        </div>
+
+        <div class="block-label" style="margin-top:34px">Languages</div>
+        <div class="lang-row">
+          <div class="lang"><div class="lg">English</div><div class="lv">C1 · Advanced</div><div class="meter"><i style="width:90%"></i></div></div>
+          <div class="lang"><div class="lg">German</div><div class="lv">A2 · B1 in progress</div><div class="meter"><i style="width:45%"></i></div></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="block-label">Certifications</div>
+        <div class="cert-list">
+          <div class="cert"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><div><div class="ct">Build Agentic AI &amp; Multi-Agent System for Software Testing</div><div class="cy">Jan — Mar 2026</div></div></div>
+          <div class="cert"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><div><div class="ct">The Complete Self-Driving Car Course — Applied Deep Learning</div><div class="cy">May — Sep 2021</div></div></div>
+          <div class="cert"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><div><div class="ct">Learn HIL Testing from Scratch (Hardware in the Loop)</div><div class="cy">Nov 2021 — Jan 2022</div></div></div>
+          <div class="cert"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><div><div class="ct">Advanced Driver Assistance Systems (ADAS)</div><div class="cy">Aug 2021 — Jan 2022</div></div></div>
+          <div class="cert"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><div><div class="ct">Machine Learning &amp; Deep Learning</div><div class="cy">Coursework</div></div></div>
+          <div class="cert"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><div><div class="ct">Google Cloud Essentials</div><div class="cy">Qwiklabs</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="reveal"><span class="eyebrow">Contact</span><h2 class="sec-title">Let's build something</h2></div>
+    <div class="contact-grid">
+      <div class="contact-copy reveal">
+        <p>Open to roles and collaborations in AI and software engineering. Drop a line — or use the console up top to ask about my work first.</p>
+        <a class="cx" href="mailto:danish.reza1@gmail.com">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span>
+          <span><span class="k">Email</span><br><span class="v">danish.reza1@gmail.com</span></span>
+        </a>
+        <a class="cx" href="https://www.linkedin.com/in/danish-reza-aa1b17196/" target="_blank" rel="noopener">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.3 8.65 21 11 21 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.56-2.3 3.2V21H9z"/></svg></span>
+          <span><span class="k">LinkedIn</span><br><span class="v">in/danish-reza</span></span>
+        </a>
+        <a class="cx" href="https://github.com/danish-ctrl" target="_blank" rel="noopener">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9v2.82c0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg></span>
+          <span><span class="k">GitHub</span><br><span class="v">github.com/danish-ctrl</span></span>
+        </a>
+      </div>
+
+      <div class="reveal">
+        <form id="contactForm" action="https://formspree.io/f/mjvpdgey" method="POST">
+          <div class="frow">
+            <div class="field"><label for="cf-name">Name</label><input id="cf-name" name="name" type="text" required /></div>
+            <div class="field"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" required /></div>
+          </div>
+          <div class="field"><label for="cf-sub">Subject</label><input id="cf-sub" name="subject" type="text" required /></div>
+          <div class="field"><label for="cf-msg">Message</label><textarea id="cf-msg" name="message" required></textarea></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send message
+          </button>
+          <div class="form-msg" id="formMsg" role="status"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="cp">© <span id="year"></span> Mohammed Danish Reza · Built from scratch.</div>
+    <div class="socials">
+      <a href="https://github.com/danish-ctrl" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9v2.82c0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg></a>
+      <a href="https://www.linkedin.com/in/danish-reza-aa1b17196/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.3 8.65 21 11 21 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.56-2.3 3.2V21H9z"/></svg></a>
+      <a href="mailto:danish.reza1@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" id="totop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script>
+/* =========================================================
+   1 · NAV  — shrink, mobile toggle, active link, to-top
+   ========================================================= */
+(function(){
+  const nav = document.getElementById('nav');
+  const burger = document.getElementById('burger');
+  const totop = document.getElementById('totop');
+  const links = [...document.querySelectorAll('.menu a[data-nav]')];
+
+  const onScroll = () => {
+    nav.classList.toggle('stuck', window.scrollY > 24);
+    totop.classList.toggle('show', window.scrollY > 600);
+  };
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.menu a, .nav-cta').forEach(a =>
+    a.addEventListener('click', () => { nav.classList.remove('open'); burger.setAttribute('aria-expanded', false); })
+  );
+  totop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  // active section highlight
+  const ids = links.map(a => a.getAttribute('href').slice(1));
+  const secs = ids.map(id => document.getElementById(id)).filter(Boolean);
+  const spy = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if(e.isIntersecting){
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+e.target.id));
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(s => spy.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+
+/* =========================================================
+   2 · REVEAL on scroll
+   ========================================================= */
+(function(){
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('in'), (i%4)*70); io.unobserve(e.target);} });
+  }, {threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+/* =========================================================
+   3 · ROTATING ROLE typewriter
+   ========================================================= */
+(function(){
+  const el = document.getElementById('rot');
+  if(!el) return;
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const roles = ['AI & agentic systems','test automation','Python tooling','LLM applications'];
+  if(reduce){ el.textContent = roles[0]; return; }
+  let ri=0, ci=0, del=false;
+  (function tick(){
+    const w = roles[ri];
+    el.textContent = w.slice(0, ci);
+    if(!del && ci < w.length){ ci++; setTimeout(tick, 65); }
+    else if(!del && ci === w.length){ del=true; setTimeout(tick, 1600); }
+    else if(del && ci > 0){ ci--; setTimeout(tick, 32); }
+    else { del=false; ri=(ri+1)%roles.length; setTimeout(tick, 260); }
+  })();
+})();
+
+/* =========================================================
+   4 · HERO OSCILLOSCOPE — dual-channel signal trace
+   ========================================================= */
+(function(){
+  const cvs = document.getElementById('scope');
+  if(!cvs) return;
+  const ctx = cvs.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let W=0,H=0,DPR=1,t=0,raf=null;
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio||1, 2);
+    const r = cvs.getBoundingClientRect();
+    W=r.width; H=r.height;
+    cvs.width = W*DPR; cvs.height = H*DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  window.addEventListener('resize', resize); resize();
+
+  function grid(){
+    ctx.strokeStyle = 'rgba(24,50,71,.5)';
+    ctx.lineWidth = 1;
+    const step = 46;
+    for(let x=(W%step)/2; x<W; x+=step){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for(let y=(H%step)/2; y<H; y+=step){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  }
+
+  function wave(opt){
+    const {color, amp, freq, base, phase, width, glow, noise=0} = opt;
+    ctx.beginPath();
+    for(let x=0; x<=W; x+=3){
+      const k = x/W;
+      const env = Math.sin(Math.PI*k);                    // taper at edges
+      const n = noise ? (Math.sin(x*0.35+t*3)+Math.sin(x*0.13-t*2))*noise : 0;
+      const y = base
+        + Math.sin(x*freq + t*1.2 + phase) * amp * env
+        + Math.sin(x*freq*0.5 - t*0.8 + phase) * amp*0.35 * env
+        + n;
+      x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = glow;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    grid();
+    // probe (blue) — measured, a touch noisy
+    wave({color:'rgba(255,122,69,.62)', amp:H*0.10, freq:0.012, base:H*0.44, phase:0, width:1.6, glow:12, noise:H*0.006});
+    // current (amber) — smoother, dominant
+    wave({color:'rgba(51,230,209,.78)', amp:H*0.14, freq:0.009, base:H*0.6, phase:1.6, width:2, glow:16});
+    t += 0.02;
+    raf = requestAnimationFrame(frame);
+  }
+
+  if(reduce){ frame(); if(raf) cancelAnimationFrame(raf); }
+  else frame();
+
+  // pause when tab hidden (battery-friendly, fittingly)
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){ if(raf) cancelAnimationFrame(raf); }
+    else if(!reduce){ raf = requestAnimationFrame(frame); }
+  });
+})();
+
+/* =========================================================
+   5 · AI CONSOLE
+   - Tries a live LLM (works in the Claude preview / with a proxy)
+   - Falls back to a built-in knowledge base of Danish's profile
+     so it always answers, even as a static GitHub Pages site.
+   ========================================================= */
+(function(){
+  const chat = document.getElementById('chat');
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendBtn');
+  const suggest = document.getElementById('suggest');
+  const modeText = document.getElementById('modeText');
+
+  /* ---- OPTIONAL: point this at your own serverless proxy to enable
+     the live model on GitHub Pages (never expose a raw API key client-side).
+     Leave as-is to use the Claude preview endpoint + local fallback. ---- */
+  const LLM_ENDPOINT = 'https://api.anthropic.com/v1/messages';
+
+  const PROFILE = `You are NeEvo, the web edition of Danish's AI assistant, answering questions about Mohammed Danish Reza (he goes by "Danish") on his portfolio site. Answer accurately, warmly and concisely (1–4 short sentences unless more detail is clearly wanted). Refer to him as "Danish" or "he". If asked what you are, say you're NeEvo — his assistant — running here in the browser (the full version is a desktop app). Use ONLY the facts below; if something isn't covered, say you don't have that detail and point them to the contact section (danish.reza1@gmail.com). Never invent facts.
+
+ROLE: Software Application Engineer at FEV eDLP (Sandersdorf, Germany) since Nov 2023, working on BMW battery testing & validation. Writes Python test-automation tooling and does CAN network analysis (CANalyzer).
+POSITIONING: Software engineer with a strong Python base and a growing focus on Generative AI & agentic systems; moving toward AI engineering full-time. 2+ years professional experience.
+LOCATION: Wolfen, Germany. Originally from India.
+EDUCATION: M.Sc. Automotive Software Engineering, TU Chemnitz (2019–2023); B.Sc. Information Technology (2014–2018).
+AI/ML: Generative AI, LLMs (OpenAI API, Llama-3), agentic & multi-agent systems, TensorFlow, Scikit-learn, OpenCV.
+LANGUAGES/DATA: Python (primary), C, JavaScript, MySQL, MongoDB, HTML, CSS.
+TOOLING: Git, Jira, Confluence, Sphinx, Docker, GCP, Morphee, CANalyzer, CAPL, HIL simulation. Frameworks: Django, Tkinter/CustomTkinter, Pandas, NumPy, Matplotlib, Elasticsearch.
+PROJECTS: (1) NeEvo — Danish's agentic desktop assistant (Python + Llama-3) with a chat mode, an agent mode that performs real actions (automated email, reminders, web search), and PDF Q&A over documents; persistent background thread, CustomTkinter UI. The web console on this site is NeEvo's browser-based chat face. (2) AI Code Safety Reviewer — static code analysis using the OpenAI API to flag security & quality issues; Python + CustomTkinter GUI. (3) At FEV: a CSV-to-MTable converter + a custom inter-tool communication interface that cut manual data prep from hours to minutes. (4) M.Sc. thesis: AI/ML models (TensorFlow, Scikit-learn) for automated vehicle test evaluation, ISO 15622 scenarios in CarMaker.
+EARLIER PROJECTS: a 5-ECU CAN-bus vehicle-systems network; a traffic-sign CNN (43 classes); real-time object detection with YOLOv3 + OpenCV; a COVID-19 chest X-ray classifier (PyTorch, ResNet-18); heart-disease prediction (Random Forest); a Python voice desktop assistant; and a vanilla-JS clock app.
+EARLIER ROLES: Master Thesis (AI/ML) at FDTech, Chemnitz (2022–2023); Working Student Python dev at FDTech (2021–2022, REST API linking Test-Guide & Visure, BIRT reports); Frontend/Elasticsearch internship at ROKIN GmbH, Munich (2020–2021), deployed on GCP.
+CERTIFICATIONS: Agentic AI & Multi-Agent Systems for Software Testing (2026); Self-Driving Car / Applied Deep Learning; HIL Testing; ADAS.
+SPOKEN LANGUAGES: English (C1), German (A2, B1 in progress).
+AVAILABILITY: Open to opportunities in AI and software engineering.
+CONTACT: danish.reza1@gmail.com; LinkedIn linkedin.com/in/danish-reza-aa1b17196; GitHub github.com/danish-ctrl. Currently learning LangChain, RAG and multi-agent systems.`;
+
+  // ---- Local knowledge base (fallback) ----
+  const KB = [
+    {t:['fev','bmw','battery','current job','current role','do at','work at','job','day to day','daily'],
+     a:"At <strong>FEV eDLP</strong> (since Nov 2023), Danish works on <strong>BMW battery testing & validation</strong>. He writes Python test-automation tooling, runs CAN network analysis with CANalyzer, and turns raw test data into structured reports — including a CSV-to-MTable converter that cut manual data prep from hours to minutes."},
+    {t:['neevo','automation assistant','agentic','agent','llama','pdf','chat mode','agent mode','what can','what does neevo','capabilit','features'],
+     a:"<strong>NeEvo</strong> is Danish's agentic desktop assistant (Python + <strong>Llama-3</strong>). It has a <strong>chat mode</strong> for conversation, an <strong>agent mode</strong> that takes real actions — automated email, reminders and web search — and <strong>PDF Q&A</strong> over documents. A persistent background thread keeps it responsive. The assistant you're chatting with here is its web face."},
+    {t:['code safety','reviewer','static','openai','security','code review'],
+     a:"The <strong>AI Code Safety Reviewer</strong> uses the <strong>OpenAI API</strong> to flag security vulnerabilities and code-quality issues, wrapped in a CustomTkinter GUI for interactive review."},
+    {t:['ai stack','ml stack','ai skills','genai','generative','llm','machine learning','tensorflow','models'],
+     a:"On the AI side: <strong>Generative AI, LLMs</strong> (OpenAI API, Llama-3), <strong>agentic & multi-agent systems</strong>, plus <strong>TensorFlow, Scikit-learn</strong> and OpenCV. He's currently going deep on LangChain and RAG."},
+    {t:['stack','skills','tech','technolog','tools','languages','programming','python'],
+     a:"Core stack: <strong>Python</strong> (primary), C, JavaScript, SQL/MongoDB. Tooling: Git, Docker, GCP, CANalyzer, CAPL, HIL, Morphee. Frameworks: Django, CustomTkinter, Pandas, NumPy, Elasticsearch. AI: LLMs, agentic systems, TensorFlow, Scikit-learn."},
+    {t:['thesis','master thesis','masters','carmaker','iso','vehicle test'],
+     a:"His M.Sc. thesis built <strong>TensorFlow & Scikit-learn</strong> models to automatically evaluate vehicle tests, benchmarked against traditional automation across <strong>ISO 15622</strong> scenarios in CarMaker."},
+    {t:['experience','background','career','history','worked','past','fdtech','rokin'],
+     a:"Danish has 2+ years of experience: <strong>FEV eDLP</strong> (BMW battery testing, 2023–now) → <strong>FDTech</strong> (M.Sc. thesis in AI/ML, then a Python working-student role building a Test-Guide↔Visure REST API) → an <strong>Elasticsearch/frontend internship at ROKIN GmbH</strong>, Munich."},
+    {t:['education','study','studied','degree','university','chemnitz','college'],
+     a:"He holds an <strong>M.Sc. in Automotive Software Engineering</strong> from TU Chemnitz (2019–2023) and a <strong>B.Sc. in Information Technology</strong> (2014–2018)."},
+    {t:['project','built','portfolio','made','shipped'],
+     a:"Highlights: <strong>NeEvo</strong> (agentic Llama-3 desktop assistant), the <strong>AI Code Safety Reviewer</strong> (OpenAI API), battery-test tooling at FEV, and his AI/ML M.Sc. thesis on automated vehicle test evaluation. Scroll to the projects section for details."},
+    {t:['yolo','object detection','traffic sign','covid','x-ray','xray','heart disease','can bus','can-bus','ecu','clock','opencv','resnet','older project','earlier project'],
+     a:"Earlier work includes a <strong>5-ECU CAN-bus</strong> vehicle-systems network, a <strong>traffic-sign CNN</strong> (43 classes), <strong>real-time object detection</strong> with YOLOv3 + OpenCV, a <strong>COVID-19 chest X-ray</strong> classifier (PyTorch, ResNet-18), <strong>heart-disease prediction</strong> (Random Forest), a Python voice desktop assistant, and a JS clock app — all in the 'More projects' section."},
+    {t:['cert','certification','course','udemy','learning','learn'],
+     a:"Recent certs: <strong>Agentic AI & Multi-Agent Systems for Software Testing</strong> (2026), plus Applied Deep Learning / Self-Driving Cars, HIL Testing, and ADAS. He's currently learning LangChain and RAG."},
+    {t:['german','english','speak','language level','spoken'],
+     a:"Danish speaks <strong>English at C1</strong> (advanced) and <strong>German at A2</strong>, with B1 in progress."},
+    {t:['where','location','based','live','city','germany','wolfen','relocat'],
+     a:"He's based in <strong>Wolfen, Germany</strong> and is originally from India."},
+    {t:['contact','email','reach','hire me','get in touch','connect','linkedin','github'],
+     a:"Reach Danish at <a href='mailto:danish.reza1@gmail.com'>danish.reza1@gmail.com</a>, on <a href='https://www.linkedin.com/in/danish-reza-aa1b17196/' target='_blank' rel='noopener'>LinkedIn</a>, or <a href='https://github.com/danish-ctrl' target='_blank' rel='noopener'>GitHub</a>. There's also a contact form at the bottom of the page."},
+    {t:['hire','why','fit','good','strong','stand out','choose','recruit','available','open to'],
+     a:"He pairs <strong>real production software experience</strong> (2+ yrs of Python test automation on BMW battery projects) with <strong>hands-on AI engineering</strong> — shipping agentic and LLM apps himself, backed by an AI/ML M.Sc. thesis. He's <strong>open to AI & software engineering roles</strong> and moving into AI full-time."},
+    {t:['who','about','yourself','introduce','tell me about danish','bio'],
+     a:"Danish is a software engineer at FEV eDLP working on <strong>BMW battery testing</strong>, with a strong Python foundation and a fast-growing focus on <strong>Generative AI and agentic systems</strong>. He builds and ships AI apps independently and is moving toward AI engineering full-time."}
+  ];
+
+  const GREET = "Hi, I'm NeEvo — Danish's assistant, here in web form. Ask me about his experience, projects, stack, or whether he'd be a fit for a role. Try a suggestion below.";
+  const FALLBACK = "I can only speak to Danish's work here. Try asking about his role at FEV, his AI projects like NeEvo, his stack, or how to get in touch — or email him at <a href='mailto:danish.reza1@gmail.com'>danish.reza1@gmail.com</a>.";
+
+  function localAnswer(q){
+    const s = q.toLowerCase();
+    let best=null, score=0;
+    for(const item of KB){
+      let sc=0;
+      for(const kw of item.t){ if(s.includes(kw)) sc += kw.length > 4 ? 2 : 1; }
+      if(sc>score){ score=sc; best=item; }
+    }
+    return score>0 ? best.a : FALLBACK;
+  }
+
+  const history = [];
+  let busy = false;
+
+  function bubble(role, html){
+    const wrap = document.createElement('div');
+    wrap.className = 'msg ' + (role==='me'?'me':'bot');
+    wrap.innerHTML = `<div class="av">${role==='me'?'You':'NE'}</div><div class="bubble">${html}</div>`;
+    chat.appendChild(wrap);
+    chat.scrollTop = chat.scrollHeight;
+    return wrap;
+  }
+  function typing(){
+    const w = document.createElement('div');
+    w.className='msg bot';
+    w.innerHTML = `<div class="av">NE</div><div class="bubble"><span class="typing-dots"><span></span><span></span><span></span></span></div>`;
+    chat.appendChild(w); chat.scrollTop = chat.scrollHeight;
+    return w;
+  }
+
+  async function askLLM(q){
+    const res = await fetch(LLM_ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        system: PROFILE,
+        messages:[...history, {role:'user', content:q}]
+      })
+    });
+    if(!res.ok) throw new Error('LLM '+res.status);
+    const data = await res.json();
+    const text = (data.content||[]).map(b => b.type==='text'?b.text:'').join('').trim();
+    if(!text) throw new Error('empty');
+    return text;
+  }
+
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  async function send(qRaw){
+    const q = qRaw.trim();
+    if(!q || busy) return;
+    busy = true; input.value='';
+    bubble('me', esc(q));
+    const think = typing();
+
+    let answer, live=false;
+    try{
+      answer = await askLLM(q);
+      live = true;
+    }catch(e){
+      answer = localAnswer(q);
+    }
+    think.remove();
+    // live answers are plain text -> escape, then allow **bold** + line breaks; local answers already contain safe HTML
+    const rendered = live
+      ? esc(answer).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')
+      : answer;
+    bubble('bot', rendered);
+    modeText.textContent = live ? 'live model' : 'profile mode';
+    history.push({role:'user', content:q}, {role:'assistant', content: live?answer:answer.replace(/<[^>]+>/g,'')});
+    if(history.length>12) history.splice(0, history.length-12);
+    busy = false;
+    input.focus();
+  }
+
+  // seed greeting
+  bubble('bot', GREET);
+
+  sendBtn.addEventListener('click', () => send(input.value));
+  input.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); send(input.value); } });
+  suggest.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => send(c.textContent)));
+})();
+
+/* =========================================================
+   6 · CONTACT FORM — AJAX submit to Formspree
+   ========================================================= */
+(function(){
+  const form = document.getElementById('contactForm');
+  const msg = document.getElementById('formMsg');
+  if(!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.className='form-msg'; msg.textContent='Sending…';
+    try{
+      const res = await fetch(form.action, {
+        method:'POST', body:new FormData(form), headers:{'Accept':'application/json'}
+      });
+      if(res.ok){ form.reset(); msg.className='form-msg ok'; msg.textContent='✓ Message sent — thanks, I\'ll get back to you.'; }
+      else { throw new Error(); }
+    }catch(err){
+      msg.className='form-msg err';
+      msg.innerHTML = 'Couldn\'t send. Email me directly at danish.reza1@gmail.com';
+    }
+  });
+})();
+</script>
 </body>
-
 </html>
